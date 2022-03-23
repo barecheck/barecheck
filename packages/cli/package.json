@@ -1,0 +1,26 @@
+{
+  "name": "@barecheck/cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "out/main.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@barecheck/core": "^0.0.1",
+    "@types/node": "^16.11.0",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "typescript": "^4.6.2"
+  },
+  "ava": {
+    "files": [
+      "out/**/*.spec.js"
+    ]
+  }
+}

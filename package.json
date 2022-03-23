@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "tsc -b packages/core packages/cli",
+    "test": "lerna run test",
+    "clean": "rimraf packages/**/out",
+    "format": "prettier --write ."
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "prettier": "^2.6.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.2"
+  }
+}

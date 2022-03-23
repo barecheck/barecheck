@@ -1,0 +1,17 @@
+{
+  "name": "@barecheck/core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "out/index.js",
+  "typings": "out/index.d.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^16.11.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}
