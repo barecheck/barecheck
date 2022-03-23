@@ -5,6 +5,7 @@
     "build": "tsc -b packages/core packages/cli",
     "test": "lerna run test",
     "clean": "rimraf packages/**/out",
+    "lint": "eslint --ext .ts packages",
     "format": "prettier --write .",
     "format-check": "prettier --check ."
   },
@@ -12,6 +13,9 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.6.0",
     "lerna": "^4.0.0",
     "prettier": "^2.6.0",
     "rimraf": "^3.0.2",

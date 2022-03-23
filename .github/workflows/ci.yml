@@ -30,5 +30,8 @@ jobs:
       - name: Run formatting checks
         run: yarn format-check
 
+      - name: Run linting checks
+        run: yarn lint
+
       - name: Buid
         run: yarn build
