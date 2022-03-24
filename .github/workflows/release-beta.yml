@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - release-*
       - feat-add-npm-publish-workflow
 
 jobs:
@@ -12,6 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js 16.11.0
         uses: actions/setup-node@v3.0.0
         with:
@@ -52,7 +54,7 @@ jobs:
         run: npm version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --force --no-git-tag-version
 
       - name: Publish
-        run: npm publish --tag beta
+        run: lerna publish --dist-tag beta
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
