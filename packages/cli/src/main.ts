@@ -1,6 +1,7 @@
-import { awesomeFn } from '@barecheck/core';
+import { parseLcovFile } from '@barecheck/core';
 
-export function cli() {
-  awesomeFn();
-  return Promise.resolve(true);
+export async function cli() {
+  const { percentage } = await parseLcovFile('./');
+
+  return percentage;
 }

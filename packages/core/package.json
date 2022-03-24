@@ -4,12 +4,17 @@
   "description": "",
   "main": "out/index.js",
   "typings": "out/index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^16.11.0"
+    "@octokit/core": "^3.6.0",
+    "@types/node": "^16.11.0",
+    "axios": "^0.26.1",
+    "lcov-parse": "^1.0.0"
   },
   "devDependencies": {
     "typescript": "^4.6.2"

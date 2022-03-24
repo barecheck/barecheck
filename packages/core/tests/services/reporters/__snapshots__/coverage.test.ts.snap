@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`services/reporters/coverage getCoverageReportBody should render report body with full coverage 1`] = `
+"<h3>Barecheck APP</h3>Total: <b>80%</b>
+
+Your code coverage diff: <b>10% ▴</b>
+
+✅ All code changes are covered"
+`;
+
+exports[`services/reporters/coverage getCoverageReportBody should render report body with uncovered lines 1`] = `
+"<h3>Barecheck APP</h3>Total: <b>80%</b>
+
+Your code coverage diff: <b>-2% ▾</b>
+
+<details><summary>Uncovered files and lines</summary><table><tbody><tr><th>File</th><th>Lines</th></tr><tr><td><a href=\\"https://github/coverage/test.js\\">test.js</a></td><td><a href=\\"https://github/coverage/test.js#L1\\">1</a>, <a href=\\"https://github/coverage/test.js#L10\\">10</a></td></tr><tr><td><a href=\\"https://github/coverage/test.js\\">test.js</a></td><td><a href=\\"https://github/coverage/test.js#L50\\">50</a></td></tr><tr><td><a href=\\"https://github/coverage/test.js\\">test2.js</a></td><td><a href=\\"https://github/coverage/test.js#L1-L5\\">1-5</a>, <a href=\\"https://github/coverage/test.js#L10\\">10</a></td></tr></tbody></table></details>"
+`;
