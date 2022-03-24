@@ -4,7 +4,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "tsc -b packages/core packages/cli",
     "test": "lerna run test",
-    "clean": "rimraf packages/**/out",
+    "clean": "rimraf packages/**/out packages/**/tsconfig.tsbuildinfo",
     "lint": "eslint --ext .ts packages",
     "format": "prettier --write .",
     "format-check": "prettier --check ."
