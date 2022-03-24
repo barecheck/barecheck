@@ -1,11 +1,9 @@
-name: Release Beta
+name: Release
 
 on:
   push:
-    branches:
-      - master
-      - release-*
-      - feat-add-npm-publish-workflow
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -50,4 +48,4 @@ jobs:
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn lerna publish --force-publish --no-git-tag-version --no-push --canary --preid beta --pre-dist-tag beta --yes
+        run: yarn lerna publish from-git --yes
