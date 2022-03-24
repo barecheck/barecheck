@@ -54,7 +54,7 @@ jobs:
         run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --force-publish --no-git-tag-version
 
       - name: Publish
-        run: yarn lerna publish --dist-tag beta
+        run: yarn lerna publish --from-git --dist-tag beta
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
