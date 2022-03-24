@@ -46,15 +46,15 @@ jobs:
         env:
           CI: true
 
-      - name: Resolve version
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      # - name: Resolve version
+      #   id: vars
+      #   run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-      - name: 'Version based on commit: 0.0.0-beta.${{ steps.vars.outputs.sha_short }}'
-        run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --force-publish --no-git-tag-version --yes
+      # - name: 'Version based on commit: 0.0.0-beta.${{ steps.vars.outputs.sha_short }}'
+      #   run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --no-git-tag-version --yes
 
       - name: Publish
-        run: yarn lerna publish --no-git-reset --dist-tag beta
+        run: yarn lerna publish --canary --preid beta --dist-tag beta
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
