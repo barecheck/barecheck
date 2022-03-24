@@ -5,7 +5,8 @@
   "main": "out/index.js",
   "typings": "out/index.d.ts",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "test": "jest"
