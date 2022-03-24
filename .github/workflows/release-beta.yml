@@ -46,17 +46,11 @@ jobs:
         env:
           CI: true
 
-      - name: Authenticate
-        run: |
-          echo "@grandcore:registry=http://registry.npmjs.org/" > .npmrc
-          echo "registry=http://registry.npmjs.org/" >> .npmrc
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
-          npm whoami
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Version and Publish
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn lerna publish --force-publish --no-git-tag-version --no-push --canary --preid beta --pre-dist-tag beta --yes
+        run: |
+          echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+          npm whoami
+          yarn lerna publish --force-publish --no-git-tag-version --no-push --canary --preid beta --pre-dist-tag beta --yes
