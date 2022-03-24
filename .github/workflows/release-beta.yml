@@ -51,7 +51,7 @@ jobs:
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - name: 'Version based on commit: 0.0.0-beta.${{ steps.vars.outputs.sha_short }}'
-        run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --force-publish --no-git-tag-version
+        run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --force-publish --no-git-tag-version --yes
 
       - name: Publish
         run: yarn lerna publish --from-git --dist-tag beta
