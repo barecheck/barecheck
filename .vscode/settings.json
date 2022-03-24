@@ -1,4 +1,5 @@
 {
   "javascript.validate.enable": false,
-  "jest.autoRun": "off"
+  "jest.autoRun": "off",
+  "jest.jestCommandLine": "yarn workspace @barecheck/core test"
 }
