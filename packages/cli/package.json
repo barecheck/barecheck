@@ -1,14 +1,18 @@
 {
   "name": "@barecheck/cli",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "out/main.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {},
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@barecheck/core": "^0.0.1",
+    "@barecheck/core": "^0.1.0",
     "@types/node": "^16.11.0",
     "minimist": "^1.2.0"
   },

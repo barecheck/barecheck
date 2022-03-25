@@ -1,9 +1,13 @@
 {
   "name": "@barecheck/core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "out/index.js",
   "typings": "out/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "test": "jest"
   },
