@@ -68,7 +68,9 @@ jobs:
         run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --no-git-tag-version --no-push --yes
 
       - name: Publish
-        run: yarn lerna publish from-git --force-publish --no-verify-access --no-git-tag-version --no-push --dist-tag beta --ignore-changes '**/package.json'
+        run: |
+          git update-index --no-assume-unchanged lerna.json package.json packages/*/package.json
+          yarn lerna publish from-git --force-publish --no-verify-access --no-git-tag-version --no-push --dist-tag beta --ignore-changes '**/package.json'
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
