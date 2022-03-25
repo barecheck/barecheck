@@ -2,5 +2,5 @@
   "lerna": "4.0.0",
   "packages": ["packages/*"],
   "useWorkspaces": true,
-  "version": "0.1.0-beta.0"
+  "version": "0.1.0"
 }
