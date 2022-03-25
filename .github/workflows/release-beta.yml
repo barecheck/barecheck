@@ -46,16 +46,29 @@ jobs:
         env:
           CI: true
 
-      - name: NPM auth
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          echo "registry=http://registry.npmjs.org/" >> .npmrc
-          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+      # - name: NPM auth
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: |
+      #     echo "registry=http://registry.npmjs.org/" >> .npmrc
+      #     echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+
+      # - name: Publish
+      #   env:
+      #     CI: true
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: |
+      #     yarn lerna publish --force-publish --no-verify-access --no-git-tag-version --no-push --canary --preid beta --pre-dist-tag beta --yes
+
+      - name: Resolve version
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: 'Version based on commit: 0.0.0-beta.${{ steps.vars.outputs.sha_short }}'
+        run: yarn lerna version 0.0.0-beta.${{ steps.vars.outputs.sha_short }} --no-git-tag-version --no-push --yes
 
       - name: Publish
+        run: yarn lerna publish from-git --force-publish --no-verify-access --no-git-tag-version --no-push --dist-tag beta --ignore-changes '**/package.json'
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          yarn lerna publish --force-publish --no-verify-access --no-git-tag-version --no-push --canary --preid beta --pre-dist-tag beta --yes
