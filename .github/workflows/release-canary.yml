@@ -3,7 +3,7 @@ name: Release Canary
 on:
   push:
     branches:
-      - feat-canary-release
+      - master
     tags-ignore:
       - v** # Ignore running for releases
 
