@@ -39,9 +39,13 @@ jobs:
 
       - name: Run formatting checks
         run: yarn format-check
+        env:
+          CI: true
 
       - name: Run linting checks
         run: yarn lint
+        env:
+          CI: true
 
       - name: Run tests
         run: yarn test
