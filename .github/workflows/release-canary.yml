@@ -50,4 +50,7 @@ jobs:
         env:
           CI: true
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn publish:canary
+        run: |
+          git describe
+          echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
+          yarn publish:canary
