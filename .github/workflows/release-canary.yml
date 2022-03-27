@@ -1,17 +1,26 @@
-name: CI
+name: Release Canary
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - v** # Ignore running for releases
 
 jobs:
-  checks:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required because lerna uses tags to determine the version.
+
       - name: Use Node.js 16.11.0
         uses: actions/setup-node@v3.0.0
         with:
           node-version: 16.11.0
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -23,16 +32,28 @@ jobs:
             node_modules-
 
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install
+        env:
+          CI: true
 
       - name: Run formatting checks
         run: yarn format-check
+        env:
+          CI: true
 
       - name: Run linting checks
         run: yarn lint
+        env:
+          CI: true
 
       - name: Run tests
         run: yarn test
+        env:
+          CI: true
 
-      - name: Buid
-        run: yarn build
+      - name: Version and Publish
+        env:
+          CI: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn publish:canary
