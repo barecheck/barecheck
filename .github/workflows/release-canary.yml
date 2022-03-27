@@ -49,5 +49,5 @@ jobs:
       - name: Version and Publish
         env:
           CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn publish:canary
