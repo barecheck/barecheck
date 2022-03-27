@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - feat-canary-release
+    tags-ignore:
+      - v** # Ignore running for releases
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 16.11.0
+        uses: actions/setup-node@v3.0.0
+        with:
+          node-version: 16.11.0
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node_modules-v1-${{ hashFiles('yarn.lock') }}
+          # loading an older version is fine here, since it will get an npm install
+          restore-keys: |
+            node_modules-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install
+        env:
+          CI: true
+
+      - name: Run formatting checks
+        run: yarn format-check
+
+      - name: Run linting checks
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test
+        env:
+          CI: true
+
+      - name: Version and Publish
+        env:
+          CI: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn publish:canary
