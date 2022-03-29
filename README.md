@@ -9,5 +9,5 @@ yarn lerna version minor --no-push
 ```
 
 ```bash
-yarn lerna version patch
+yarn lerna version patch --force-publish
 ```
