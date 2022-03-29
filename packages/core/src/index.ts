@@ -11,3 +11,4 @@ export {
 
 // reporters
 export { getCoverageReportBody } from './services/reporters/coverage';
+export { getClonesReportBody } from './services/reporters/clones';
