@@ -1,6 +1,6 @@
 {
   "name": "@barecheck/cli",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "main": "out/main.js",
   "publishConfig": {
@@ -12,7 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@barecheck/core": "^0.2.2",
+    "@barecheck/core": "^0.2.3",
     "@types/node": "^16.11.0",
     "minimist": "^1.2.0"
   },
