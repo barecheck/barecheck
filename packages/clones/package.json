@@ -1,0 +1,23 @@
+{
+  "name": "@barecheck/clones",
+  "version": "0.2.3",
+  "description": "",
+  "main": "out/index.js",
+  "typings": "out/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@jscpd/core": "^3.4.5",
+    "@jscpd/finder": "^3.4.5",
+    "@jscpd/tokenizer": "^3.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}
