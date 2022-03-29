@@ -1,6 +1,6 @@
 {
   "name": "@barecheck/core",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "",
   "main": "out/index.js",
   "typings": "out/index.d.ts",
