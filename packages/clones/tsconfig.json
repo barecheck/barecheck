@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.settings.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "out",
+    "skipLibCheck": true // jscpd has a lot of warning during the build
+  },
+  "exclude": ["out"]
+}
