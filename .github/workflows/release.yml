@@ -44,6 +44,9 @@ jobs:
         env:
           CI: true
 
+      - name: Buid
+        run: yarn build
+
       - name: Version and Publish
         env:
           CI: true
