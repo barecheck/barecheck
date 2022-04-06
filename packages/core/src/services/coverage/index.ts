@@ -47,12 +47,12 @@ export const sendCoverage = async (
 ): Promise<number> => {
   const { accessToken, project } = await authProject({ apiKey });
 
-  const [latestCoverage] = await createCoverageMetric(accessToken, {
+  const createdCoverage = await createCoverageMetric(accessToken, {
     projectId: project.id,
     ref,
     sha,
     totalCoverage
   });
 
-  return latestCoverage ? latestCoverage.totalCoverage : 0;
+  return createdCoverage.totalCoverage
 };

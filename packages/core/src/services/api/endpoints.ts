@@ -1,34 +1,16 @@
 import axios from 'axios';
 
 import { barecheckApiUrl } from '../../config';
-
-type TAuthProject = {
-  apiKey: string;
-};
-
-type TCreateCoverageMetric = {
-  projectId: number;
-  totalCoverage: number;
-  ref: string;
-  sha: string;
-};
-
-type TCoverageMetrics = {
-  projectId: number;
-  ref?: string;
-  dateTo?: string;
-  take?: number;
-};
-
-type TCreateGithubAccessToken = {
-  appToken: string;
-};
-
-type TRequestVariables =
-  | TAuthProject
-  | TCreateCoverageMetric
-  | TCoverageMetrics
-  | TCreateGithubAccessToken;
+import {
+  TAuthProject,
+  TCreateCoverageMetric,
+  TGetMetrics,
+  TCreateClonesMetric,
+  TClonesMetric,
+  TCoverageMetric,
+  TCreateGithubAccessToken,
+  TRequestVariables
+} from './types';
 
 // TODO: define api request response interfaces
 const makeRequest = async (
@@ -102,7 +84,7 @@ export const authProject = async (variables: TAuthProject) => {
 export const createCoverageMetric = async (
   accessToken: string,
   variables: TCreateCoverageMetric
-) => {
+): Promise<TCoverageMetric> => {
   const query = `mutation createCoverageMetric($projectId: Int!, $totalCoverage: Float! $ref: String!, $sha: String!) {
     createCoverageMetric(input: {projectId: $projectId, totalCoverage: $totalCoverage, ref: $ref, sha: $sha }) {
       id
@@ -128,8 +110,8 @@ export const createCoverageMetric = async (
 
 export const coverageMetrics = async (
   accessToken: string,
-  variables: TCoverageMetrics
-) => {
+  variables: TGetMetrics
+): Promise<TCoverageMetric[]> => {
   const query = `query coverageMetrics($projectId: Int!, $ref: String, $dateTo: DateTime, $take: Int ) {
     coverageMetrics(projectId: $projectId, ref:$ref, dateTo: $dateTo, take: $take){
       id
@@ -148,4 +130,67 @@ export const coverageMetrics = async (
   }
 
   return response.data.coverageMetrics;
+};
+
+export const createClonesMetric = async (
+  accessToken: string,
+  variables: TCreateClonesMetric
+): Promise<TClonesMetric> => {
+  const query = `mutation createClonesMetric(
+    $projectId: Int!,
+    $totalLinesPercentage: Float!,
+    $totalBranchesPercentage: Float!,
+    $ref: String!,
+    $sha: String!) {
+      createClonesMetric(input: {
+        projectId: $projectId,
+        totalLinesPercentage: $totalLinesPercentage,
+        totalBranchesPercentage: $totalBranchesPercentage,
+        ref: $ref,
+        sha: $sha }) {
+          id
+          totalLinesPercentage
+          totalBranchesPercentage
+          ref
+          sha
+          createdAt
+          updatedAt
+      }
+  }
+  `;
+
+  const response = await makeRequest(accessToken, query, variables);
+
+  if (!response.data) {
+    throw new Error(
+      "Couldn't send your project clones metric. Check if `accessToken` is valid or receive new one by using `authProject` mutation"
+    );
+  }
+
+  return response.data.createClonesMetric;
+};
+
+export const clonesMetrics = async (
+  accessToken: string,
+  variables: TGetMetrics
+): Promise<TClonesMetric[]> => {
+  const query = `query clonesMetrics($projectId: Int!, $ref: String, $dateTo: DateTime, $take: Int ) {
+    clonesMetrics(projectId: $projectId, ref:$ref, dateTo: $dateTo, take: $take){
+      id
+      ref
+      sha
+      totalLinesPercentage
+      totalBranchesPercentage
+      createdAt
+    }
+  }
+  `;
+
+  const response = await makeRequest(accessToken, query, variables);
+
+  if (!response.data) {
+    return null;
+  }
+
+  return response.data.clonesMetrics;
 };
