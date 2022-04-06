@@ -3,6 +3,8 @@ import {
   authProject,
   createCoverageMetric,
   coverageMetrics,
+  createClonesMetric,
+  clonesMetrics,
   createGithubAccessToken
 } from '../../../src/services/api/endpoints';
 
@@ -178,6 +180,150 @@ describe(path, () => {
       } catch {
         expect(mockAxios.post).toBeCalledTimes(1);
       }
+    });
+  });
+
+  describe('createClonesMetric', () => {
+    it('should call axios post with proper params', async () => {
+      const accessToken = '1234';
+
+      const projectId = 123;
+      const ref = 'master';
+      const sha = 'e2e2e2';
+      const totalLinesPercentage = 93;
+      const totalBranchesPercentage = 90;
+
+      const mutationResponse = {
+        data: {
+          data: {
+            createClonesMetric: {
+              projectId
+            }
+          }
+        }
+      };
+      mockAxios.post.mockResolvedValueOnce(mutationResponse);
+
+      await createClonesMetric(accessToken, {
+        projectId,
+        ref,
+        sha,
+        totalLinesPercentage,
+        totalBranchesPercentage
+      });
+
+      expect(mockAxios.post).toBeCalledTimes(1);
+
+      const [requestPath, body, headers] = mockAxios.post.mock.calls[0];
+      expect(requestPath).toBe('https://barecheck.com/api/graphql');
+      expect(body.variables).toMatchObject({
+        projectId,
+        ref,
+        sha,
+        totalLinesPercentage,
+        totalBranchesPercentage
+      });
+      expect(headers).toMatchObject({
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-provider': 'custom',
+          authorization: `Bearer ${accessToken}`
+        }
+      });
+    });
+
+    it('should throw error once there is no data in the response', async () => {
+      const accessToken = '1234';
+
+      const projectId = 123;
+      const ref = 'master';
+      const sha = 'e2e2e2';
+      const totalLinesPercentage = 93;
+      const totalBranchesPercentage = 90;
+
+      const mutationResponse = {
+        errors: ['some error']
+      };
+
+      mockAxios.post.mockResolvedValueOnce(mutationResponse);
+
+      try {
+        await createClonesMetric(accessToken, {
+          projectId,
+          ref,
+          sha,
+          totalLinesPercentage,
+          totalBranchesPercentage
+        });
+        fail('createClonesMetric should throw an error');
+      } catch {
+        expect(mockAxios.post).toBeCalledTimes(1);
+      }
+    });
+  });
+
+  describe('clonesMetrics', () => {
+    it('should call axios post with proper params', async () => {
+      const accessToken = '1234';
+
+      const projectId = 123;
+      const ref = 'master';
+      const sha = 'e2e2e2';
+      const totalLinesPercentage = 93;
+      const totalBranchesPercentage = 90;
+
+      const queryResponse = {
+        data: {
+          data: {
+            clonesMetrics: {
+              ref,
+              sha,
+              projectId,
+              totalLinesPercentage,
+              totalBranchesPercentage
+            }
+          }
+        }
+      };
+
+      mockAxios.post.mockResolvedValueOnce(queryResponse);
+
+      const actualRes = await clonesMetrics(accessToken, {
+        projectId,
+        ref
+      });
+
+      const [requestPath, body, headers] = mockAxios.post.mock.calls[0];
+      expect(requestPath).toBe('https://barecheck.com/api/graphql');
+      expect(body.variables).toMatchObject({ projectId, ref });
+      expect(headers).toMatchObject({
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      expect(actualRes).toBe(queryResponse.data.data.clonesMetrics);
+    });
+
+    it('should return null from api', async () => {
+      const accessToken = '1234';
+
+      const projectId = 123;
+      const ref = 'master';
+
+      const queryResponse = {
+        data: {
+          data: null
+        }
+      };
+      mockAxios.post.mockResolvedValueOnce(queryResponse);
+
+      const actualRes = await clonesMetrics(accessToken, {
+        projectId,
+        ref
+      });
+
+      expect(mockAxios.post).toBeCalledTimes(1);
+      expect(actualRes).toBeNull();
     });
   });
 
