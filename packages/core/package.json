@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit/core": "^3.6.0",
-    "@types/node": "^16.11.0",
+    "@types/node": "^18.11.10",
     "axios": "^0.26.1",
     "lcov-parse": "^1.0.0"
   },
